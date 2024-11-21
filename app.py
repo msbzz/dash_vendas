@@ -27,7 +27,23 @@ app.layout = html.Div(
       html.H5('Cidades'),
       dcc.Checklist(df_data['City'].value_counts().index,
                     df_data['City'].value_counts().index,
-                    id='check-city')  
+                    id='check-city'),
+
+      html.H5('Variável de análise'),
+
+      dcc.RadioItems(
+         options= ['gross income','Rating'],
+         value= 'gross income',
+         id='main-variable',
+         inline=True
+          ),    
+
+      html.H5('Por cidade'),
+      dcc.Graph(id='city-fig'),
+      html.H5('Por pagamentos'),
+      dcc.Graph(id='pay-fig'),
+      html.H5('Por produtos'),
+      dcc.Graph(id='income_per_product'),                
 
     ]
 )

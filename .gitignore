@@ -1,0 +1,30 @@
+# Python virtual environment
+env/
+venv/
+*.pyc
+__pycache__/
+
+# Configurações de IDE e editores
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Arquivos temporários do sistema
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Arquivos de dependências
+pip-wheel-metadata/
+*.egg-info/
+
+# Arquivos de build
+dist/
+build/
+*.egg
+
+# Arquivos sensíveis
+.env
+.env.*
+*.key

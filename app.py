@@ -52,9 +52,14 @@ app.layout = html.Div(
           ],sm=2),
  
           dbc.Col([
-          dcc.Graph(id='city-fig'),
-          dcc.Graph(id='pay-fig'),
-          dcc.Graph(id='income_per_product'),    
+            dbc.Row([
+              dbc.Col([dcc.Graph(id='city-fig')],sm=4),
+              dbc.Col([dcc.Graph(id='gender_fig')],sm=4),
+              dbc.Col([dcc.Graph(id='pay-fig')],sm=4),
+            ]),
+            dbc.Row([dcc.Graph(id='income_per_date_fig')]),
+            dbc.Row([dcc.Graph(id='income_per_product_fig')]),
+    
           ],sm=10)
                      
         ]) 
@@ -67,7 +72,9 @@ app.layout = html.Div(
     [
         Output(component_id='city-fig', component_property='figure'),
         Output(component_id='pay-fig', component_property='figure'),
-        Output(component_id='income_per_product', component_property='figure')
+        Output(component_id='gender_fig',component_property= 'figure'),
+        Output(component_id='income_per_date_fig',component_property= 'figure'),
+        Output(component_id='income_per_product_fig', component_property='figure')
     ],
     [
         Input(component_id='check_city', component_property='value'),
@@ -84,12 +91,12 @@ def render_graphs(cities, main_variable):
     
     # Agrupamento por cidade
     df_city = df_filtered.groupby('City')[main_variable].apply(operation).to_frame().reset_index()
-	
-     
+	  # Agrupamento por genero e cidade
+    df_gender = df_filtered.groupby(["Gender", "City"])[main_variable].apply(operation).to_frame().reset_index() 
     ## Agrupamento por método de pagamento
     df_payment = df_filtered.groupby('Payment')[main_variable].apply(operation).to_frame().reset_index()
-     
-    
+    # Agrupamento por data 
+    df_income_time = df_filtered.groupby("Date")[main_variable].apply(operation).to_frame().reset_index()
     # Agrupamento por produto
     df_product_income = df_filtered.groupby(['Product line', 'City'])[main_variable].apply(operation).to_frame().reset_index()
  
@@ -97,8 +104,11 @@ def render_graphs(cities, main_variable):
     # Gráficos
     fig_city = px.bar(df_city, x='City', y=main_variable, title='Análise por Cidade',template='plotly_dark')
     fig_payment = px.bar(df_payment, y='Payment', x=main_variable,title='Análise por Método de Pagamento', orientation="h",template='plotly_dark') 
+    fig_gender = px.bar(df_gender, y=main_variable, x="Gender", color="City", barmode="group",template='plotly_dark')
     fig_product_income = px.bar(df_product_income, x=main_variable, y='Product line', color="City",title='Análise por Produto', orientation="h", barmode="group",template='plotly_dark')    
-    return fig_city, fig_payment, fig_product_income
+    fig_income_date = px.bar(df_income_time, y=main_variable, x="Date",template='plotly_dark')
+    
+    return fig_city, fig_payment,fig_gender,fig_income_date,fig_product_income
 
 # Executando o servidor
 if __name__ == "__main__":

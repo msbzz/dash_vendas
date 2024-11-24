@@ -3,6 +3,7 @@ import dash
 from dash import html, dcc
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
+from dash_bootstrap_templates import ThemeChangerAIO, template_from_url
 import pandas as pd
 import numpy as np
 
@@ -23,23 +24,41 @@ df_data['Date'] = pd.to_datetime(df_data['Date'])
 # Layout da aplicação
 app.layout = html.Div(
     children=[
-        html.H5('Cidades'),
-        dcc.Checklist(
-            df_data['City'].value_counts().index,
-            df_data['City'].value_counts().index,
-            inline=True,
-            id='check_city'
-        ),
-        html.H5('Variável de análise'),
-        dcc.RadioItems(
-            options=['gross income', 'Rating'],
-            value='gross income',
-            id='main_variable',
-            inline=True
-        ),
-        dcc.Graph(id='city-fig'),
-        dcc.Graph(id='pay-fig'),
-        dcc.Graph(id='income_per_product'),
+        dbc.Row([
+          dbc.Col([
+              dbc.Card([
+                html.H2('ASIMOV',style={'padding_top':'20px'}),
+                html.Hr(),
+                html.H5('Cidades'),
+                dcc.Checklist(
+                    df_data['City'].value_counts().index,
+                    df_data['City'].value_counts().index,
+                    inline=True,
+                    id='check_city',
+                    inputStyle={"margin-right": "5px", "margin-left": "20px"}
+                ),
+                
+                
+                html.H5('Variável de análise'),
+                dcc.RadioItems(
+                    options=['gross income', 'Rating'],
+                    value='gross income',
+                    id='main_variable',
+                    inline=True,
+                    inputStyle={"margin-right": "5px", "margin-left": "20px"}
+                ),
+              
+              ],style={'padding':'20px','height':'90vh','margin':'20px'})
+          ],sm=2),
+ 
+          dbc.Col([
+          dcc.Graph(id='city-fig'),
+          dcc.Graph(id='pay-fig'),
+          dcc.Graph(id='income_per_product'),    
+          ],sm=10)
+                     
+        ]) 
+      
     ]
 )
 

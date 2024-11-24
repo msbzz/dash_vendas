@@ -2,14 +2,17 @@ import os
 import dash
 from dash import html, dcc
 from dash.dependencies import Input, Output
-
+import dash_bootstrap_components as dbc
 import pandas as pd
 import numpy as np
 
 import plotly.express as px
 
 # Inicializando o Dash
-app = dash.Dash(__name__)
+# app = dash.Dash(__name__)
+app = dash.Dash(
+    external_stylesheets=[dbc.themes.DARKLY]
+)
 server = app.server
 
 # Carregando os dados
@@ -73,9 +76,9 @@ def render_graphs(cities, main_variable):
  
 
     # Gráficos
-    fig_city = px.bar(df_city, x='City', y=main_variable, title='Análise por Cidade')
-    fig_payment = px.bar(df_payment, y='Payment', x=main_variable,title='Análise por Método de Pagamento', orientation="h") 
-    fig_product_income = px.bar(df_product_income, x=main_variable, y='Product line', color="City",title='Análise por Produto', orientation="h", barmode="group")    
+    fig_city = px.bar(df_city, x='City', y=main_variable, title='Análise por Cidade',template='plotly_dark')
+    fig_payment = px.bar(df_payment, y='Payment', x=main_variable,title='Análise por Método de Pagamento', orientation="h",template='plotly_dark') 
+    fig_product_income = px.bar(df_product_income, x=main_variable, y='Product line', color="City",title='Análise por Produto', orientation="h", barmode="group",template='plotly_dark')    
     return fig_city, fig_payment, fig_product_income
 
 # Executando o servidor

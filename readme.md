@@ -2,6 +2,9 @@
 
 Este projeto é fruto do curso **Dashboards com Dash** da plataforma **Asimov Academy**  onde se tem um **dashboard interativo** desenvolvido com **Dash** e **Plotly** em Python, que analisa os dados de vendas de um supermercado. Ele permite a visualização dinâmica de diferentes métricas, como receita bruta, avaliações (ratings), métodos de pagamento, e linhas de produtos, filtradas por cidades.
 
+
+<img src="images/final projeto.png" alt="projeto" width="500"/>
+
 ## Funcionalidades
 
 - **Seleção de Cidades**: Use a checklist para filtrar os gráficos com base em uma ou mais cidades.
@@ -14,7 +17,7 @@ Este projeto é fruto do curso **Dashboards com Dash** da plataforma **Asimov Ac
 ## Estrutura do Projeto
 
 - **`app.py`**: Contém o código principal da aplicação.
-- **`supermarket_sales.csv`**: Arquivo com os dados de vendas do supermercado.
+- **`supermarket_sales.csv`**: Arquivo com os dados de vendas do supermercado (pasta assets).
 
 ## Pré-requisitos
 
